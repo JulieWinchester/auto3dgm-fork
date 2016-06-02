@@ -22,12 +22,12 @@ function(ifn,ofn,ds,k, pa){
     pa_tmp = list.add(pa_tmp, R_prototype)
     pa_tmp = list.add(pa_tmp, P_prototype)
     pa_tmp = list.add(pa_tmp, gamma_prototype)
-    names(pa_tmp) = c(names(pa_tmp)[1:3], c("d","R","P","gamma"))
+    names(pa_tmp) = c(names(pa_tmp)[1:4], c("d","R","P","gamma"))
     
     
     for (ii in 1:length(r)){
       message = paste("--------> Processing: ", num2str(r[ii],3), " and ", num2str(c[ii],3), sep="" )
-      print(message)  
+      print(message)
       tmpGPD = f(r[ii],c[ii],ds,k,pa)
       pa_tmp$d[ r[ii], c[ii] ] = tmpGPD[[1]]
       pa_tmp$R[[ r[ii] ]][[c[ii] ]] = tmpGPD[[2]]

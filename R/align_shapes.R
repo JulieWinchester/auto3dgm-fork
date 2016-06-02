@@ -1,5 +1,5 @@
 align_shapes <-
-function(Data_dir, Output_dir, Levels, Ids, Names){
+function(Data_dir, Output_dir, Levels, Ids, Names, Mirror=1){
 
 ##############################################################################################
 # R Code for Shape Alignment
@@ -114,7 +114,8 @@ pa = list()
 pa = list.add(pa, upper_triangle(ds$n) )  # a 1 entry in this matrix indicates the pairwise distance should be computed
 pa = list.add(pa,8) # Number of positions to test, the first 8 are the 8 possibilities for aligning the principal axes
 pa = list.add(pa,paste(ds$msc$output_dir, "/jobs/", sep="") )
-names(pa)=c("A","L","pfj")
+pa = list.add(pa, Mirror) # Boolean, 1 for 8 alignment possibilities (may mirror aligned specimens) or 0 for 4 (no mirror) 
+names(pa)=c("A","L","pfj","M")
 
 
 

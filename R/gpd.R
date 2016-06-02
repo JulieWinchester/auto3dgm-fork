@@ -1,5 +1,5 @@
 gpd <-
-function(X_arg,Y_arg,L_arg){
+function(X_arg,Y_arg,L_arg,M_arg){
 
   
   #Generalized Procrustes Distance
@@ -14,7 +14,8 @@ function(X_arg,Y_arg,L_arg){
   R_0 = 1
   mat = matrix()
   
-  tst = list.add(tst, principal_component_alignment(X_arg,Y_arg))
+  tst = list.add(tst, principal_component_alignment(X_arg,Y_arg,M_arg))
+  L_arg = length(tst[[1]])
   
   d = 2
   tst = list.add(tst, rep(0,L_arg))

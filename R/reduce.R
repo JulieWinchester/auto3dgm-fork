@@ -18,7 +18,7 @@ function(ds, pa, n_jobs){
   pa = list.add(pa, R_prototype)
   pa = list.add(pa, P_prototype)
   pa = list.add(pa, gamma_prototype)
-  names(pa) = c(names(pa)[1:3], c("d","R","P","gamma"))
+  names(pa) = c(names(pa)[1:4], c("d","R","P","gamma"))
   
   for (kk in 1:n_jobs){
     KK = kk-1
