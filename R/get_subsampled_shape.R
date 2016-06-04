@@ -5,8 +5,8 @@ function(dir, id, NN){
   if(substring(dir, 1, 4)=="http"){URL=T}
   
   
-  sub_off_fn = paste(dir,'/subsampled/', as.character(id), '.off', sep='')
-  off_fn = paste(dir,'/', as.character(id), '.off', sep='')
+  sub_off_fn = file.path(dir,'subsampled', as.character(id))
+  off_fn = file.path(dir, as.character(id))
   
   if(URL){
     if (url.exists(sub_off_fn) ){
@@ -32,7 +32,7 @@ function(dir, id, NN){
       VF = read_off(off_fn); V = VF[[1]]; Fa = VF[[2]];
       ind = subsample(V,NN,X)
       X = V[,ind]
-      sub_dir = paste(dir,'subsampled',sep='/')
+      sub_dir = file.path(dir,'subsampled')
       if(!file.exists(sub_dir)){
         dir.create(sub_dir, showWarnings=T)
       }

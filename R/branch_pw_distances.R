@@ -29,7 +29,7 @@ function(A_index,B_index, ds, pa, k ,fix_dir_AB){
   d = d[order(distance),]
   
   ##Output a file with all pairwise comparisons.  The base will be in its typical position
-  #and the other shapes will be pairwise aligned to the baise.  
+  #and the other shapes will be pairwise aligned to the base.  
 
   #Create a directory for all of these files
   unlink(fix_dir_AB, recursive=TRUE)

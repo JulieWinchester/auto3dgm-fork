@@ -1,5 +1,5 @@
 align_shapes <-
-function(Data_dir, Output_dir, Levels, Ids, Names, Mirror=1){
+function(Data_dir, Output_dir, Levels, Ids=NULL, Names=NULL, Mirror=1){
 
 ##############################################################################################
 # R Code for Shape Alignment
@@ -9,26 +9,21 @@ function(Data_dir, Output_dir, Levels, Ids, Names, Mirror=1){
 # September 6, 2013
 ##############################################################################################
 
-#------------------------------------------------------------------------------------------
+#-------------YOU DO NOT NEED TO MODIFY ANYTHING AFTER THIS POINT ------------------------#
 
 ds = list(N=c(), ids=c(), names=c(), n = NA, K = NA, msc = list(mesh_dir=NA, output_dir=NA), shape=list())
 
 ds$N = Levels
-ds$ids = Ids
-ds$names = Names
-
-
-
-
-#-------------YOU DO NOT NEED TO MODIFY ANYTHING AFTER THIS POINT ------------------------#
+ds$ids = prepare_ids(Ids, Data_dir)
+print(ds$ids)
+ds$names = prepare_names(Names, ds$ids)
+print(ds$names)
 
 #Variables not to be changed
-
 ds$n = length(ds$ids)
 ds$K = length(ds$N) 
 
 #ds.msc.general_dir
-
 
 ds$msc$mesh_dir = Data_dir
 ds$msc$output_dir = Output_dir
@@ -88,7 +83,7 @@ for (ii in 1:ds$n){
 
 for (ii in 1:ds$n){
   #Read the files
-  lowres_off_fn = paste(ds$msc$mesh_dir, "/lowres/", ds$ids[ii], ".off", sep="")
+  lowres_off_fn = file.path(ds$msc$mesh_dir, "lowres", ds$ids[ii])
   if (file.exists( lowres_off_fn ) || url.exists(lowres_off_fn) ){
     tmpVF= read_off(lowres_off_fn)
     ds$shape[[ii]]$lowres$V = tmpVF[[1]] 
