@@ -5,7 +5,7 @@ prepare_ids <-
         stop("Error. When loading data from a URL, Ids must be provided")
       }else{ # Get list of files if Data_dir is not URL (i.e., local dir)
         if (file.exists(Data_dir) ){
-          Ids = list.files(path = Data_dir, pattern = "\\.[oO][fF][fF]$")
+          Ids = list.files(path = Data_dir, pattern = "\\.[oOpP][fFlL][fFyY]$")
           return(Ids)
         }else{
           stop("Error. The local data directory does not exist")

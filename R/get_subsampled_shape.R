@@ -4,9 +4,9 @@ function(dir, id, NN){
   URL = F
   if(substring(dir, 1, 4)=="http"){URL=T}
   
-  
-  sub_off_fn = file.path(dir,'subsampled', as.character(id))
-  off_fn = file.path(dir, as.character(id))
+  id = as.character(id) 
+  sub_off_fn = file.path(dir,'subsampled', paste(substr(id, 1, nchar(id)-4),".off",sep=""))
+  mesh_fn = file.path(dir, id)
   
   if(URL){
     if (url.exists(sub_off_fn) ){
@@ -29,7 +29,17 @@ function(dir, id, NN){
     }
     
     if(n_subsampled_pts < NN){
-      VF = read_off(off_fn); V = VF[[1]]; Fa = VF[[2]];
+      mesh_fn_type = substring(tolower(mesh_fn), nchar(mesh_fn)-3, nchar(mesh_fn))
+      
+      if(mesh_fn_type == ".off"){
+        VF = read_off(mesh_fn)
+      }else if(mesh_fn_type == ".ply"){
+        VF = read_ply(mesh_fn)
+      }else{
+        stop("Error. Unrecognized mesh file type.")
+      }
+      
+      V = VF[[1]]; Fa = VF[[2]];
       ind = subsample(V,NN,X)
       X = V[,ind]
       sub_dir = file.path(dir,'subsampled')

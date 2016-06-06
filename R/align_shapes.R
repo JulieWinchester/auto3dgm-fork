@@ -15,9 +15,7 @@ ds = list(N=c(), ids=c(), names=c(), n = NA, K = NA, msc = list(mesh_dir=NA, out
 
 ds$N = Levels
 ds$ids = prepare_ids(Ids, Data_dir)
-print(ds$ids)
 ds$names = prepare_names(Names, ds$ids)
-print(ds$names)
 
 #Variables not to be changed
 ds$n = length(ds$ids)
@@ -83,21 +81,32 @@ for (ii in 1:ds$n){
 
 for (ii in 1:ds$n){
   #Read the files
-  lowres_off_fn = file.path(ds$msc$mesh_dir, "lowres", ds$ids[ii])
-  if (file.exists( lowres_off_fn ) || url.exists(lowres_off_fn) ){
+  hires_mesh_fn = substr(ds$ids[ii], 1, nchar(ds$ids[ii])-4)
+  lowres_path = file.path(ds$msc$mesh_dir, "lowres", hires_mesh_fn)
+  lowres_off_fn = paste(lowres_path,".off",sep="")
+  lowres_ply_fn = paste(lowres_path,".ply",sep="")
+  
+  url_exists_off = message_error_handler(url.exists(lowres_off_fn))
+  url_exists_ply = message_error_handler(url.exists(lowres_ply_fn))
+  
+  if (file.exists( lowres_off_fn ) || isTRUE(url_exists_off) ){
     tmpVF= read_off(lowres_off_fn)
-    ds$shape[[ii]]$lowres$V = tmpVF[[1]] 
-    ds$shape[[ii]]$lowres$FF = tmpVF[[2]]
-    
-    ds$shape[[ii]]$lowres$V = ds$shape[[ii]]$lowres$V - repmat(ds$shape[[ii]]$center,1,dim(ds$shape[[ii]]$lowres$V)[2]);
-    ds$shape[[ii]]$lowres$V = ds$shape[[ii]]$lowres$V / ( ds$shape[[ii]]$scale / sqrt( ds$N[ ds$K ] ) );
-    
-    
+  }else if (file.exists( lowres_ply_fn ) || isTRUE(url_exists_ply) ){
+    tmpVF= read_ply(lowres_ply_fn)
   }else{
-    print(paste("Cannot find low resolution file: ", lowres_off_fn,sep="") )
+    message(paste("Cannot find low resolution file ", lowres_off_fn, " or ", lowres_ply_fn, sep="") )
+    if (substr(Data_dir, 1, 4) == "http") {
+      message("Error messages:")
+      message(url_exists_off)
+      message(url_exists_ply)
+    }
   }
-  
-  
+    
+  ds$shape[[ii]]$lowres$V = tmpVF[[1]] 
+  ds$shape[[ii]]$lowres$FF = tmpVF[[2]]
+    
+  ds$shape[[ii]]$lowres$V = ds$shape[[ii]]$lowres$V - repmat(ds$shape[[ii]]$center,1,dim(ds$shape[[ii]]$lowres$V)[2]);
+  ds$shape[[ii]]$lowres$V = ds$shape[[ii]]$lowres$V / ( ds$shape[[ii]]$scale / sqrt( ds$N[ ds$K ] ) );  
 }
 
 
