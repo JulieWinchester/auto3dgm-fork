@@ -1,0 +1,121 @@
+################################################################################
+#
+# auto3dgm-fork
+#
+# Original auto3dgm package authors: Chris Glynn, Jesus Puente, Doug Boyer,
+# Sayan Mukherjee, Ingrid Daubechies, and Justin Gladman
+# Departments of Statistical Science, Mathematics, and Evolutionary Anthropology
+# Duke University
+#
+# Fork author: Julia Winchester
+# Department of Evolutionary Anthropology
+# Duke University
+################################################################################ 
+
+auto3dgm-fork is a branch of the R version of auto3dgm that implements a number 
+of "quality of life" improvements while maintaining the full capability of the
+original auto3dgm R package. These improvements include:
+
+	- Optional disabling of specimen mirroring/reflection during alignment
+	- Reading specimens as PLY files in addition to OFF files
+	- Lists of file names and IDs are not required for align_shapes() function
+
+#######################
+# Loading auto3dgm-fork
+#######################
+
+Unlike standard auto3dgm, auto3dgm-fork has not been uploaded to CRAN. This 
+means it can't be installed using R's install.packages() function, or loaded 
+using R's library() or require() functions. Instead, auto3dgm-fork files must be
+loaded as needed into an active R session to be used. The easiest way to do this
+is to load the included file 'source_auto3dgm-fork.R' using R's source() 
+function, like so:
+
+	source("/Users/Julie/Code/auto3dgm-fork/source_auto3dgm-fork.R")
+
+On sourcing, this file should load all auto3dgm-fork files into the active R 
+workspace.
+
+########################################
+# Using auto3dgm-fork and align_shapes()
+########################################
+
+Like standard auto3dgm, auto3dgm-fork is used by calling the align_shapes() 
+function (see http://www2.stat.duke.edu/~sayan/auto3dgm/Instructions/index.html 
+for more information, this document assumes some familiarity with the standard 
+package), as so:
+
+	result = align_shapes(Data_dir, Output_dir, Levels, Ids, Names, Mirror)
+
+The function arguments (Data_dir, Output_dir, Levels, *Ids*, *Names*, *Mirror*) 
+are similar to standard auto3dgm with some changes. Arguments enclosed with 
+asterisks are optional, and may be excluded in some cases. Each argument will be
+described and differences noted.
+
+	Data_dir ("http://stat.duke.edu/~sayan/auto3dgm/data/meshes/teeth_dataset"): 
+	A string path to a directory (local or web) of surface mesh files. These 
+	files can be in OFF or PLY format.
+
+	Output_dir ("/Users/sayanm/Desktop/Bones"): A directory to which files are 
+	exported. 
+
+	Levels (64, 128): Numbers of points for subsampled data.
+
+	Ids ('001','002','003','004','005'):  A list of data file names, excluding 
+	file type. If loading files from a local directory, this argument is 
+	optional and may be excluded.
+
+	Names ('a01','a02','a03','a04','a05'): A list of names for surfaces 
+	corresponding to data files. This argument is optional, and if excluded 
+	file names will be used as surface names. 
+
+	Mirror: This argument is boolean (0 or 1) and specifies whether specimen 
+	mirroring/reflection should be used when attempting to align surfaces. It is
+	optional and by default mirroring is enabled. To disable mirroring, Mirror
+	should be 0. Please note that if mirroring is disabled, then only 4 initial
+	alignment "guesses" will be used instead of 8. It is possible that this may
+	decrease alignment accuracy.
+
+Because the new Mirror argument is optional and reflection is enabled by 
+default, any use of the align_shapes() function that conforms to previous 
+examples given for using auto3dgm will produce identical results in 
+auto3dgm-fork compared with the standard package. As an example, the 
+Web_Example.R file provided in the instructions for the standard package 
+produces the same results for both the standard and fork packages. The 
+advantages of this package are in control over specimen reflection, ability to 
+use PLY files as well as OFF files, and being able to exclude long lists of file
+names and Ids when calling align_shapes(). Several examples are given below for 
+different possible ways of calling align_shapes() as necessary:
+
+Standard auto3dgm behavior, mirroring enabled by default:
+	result = align_shapes(Data_dir, Output_dir, Levels, Ids, Names)
+
+Loading local or web files specifying Ids and Names, mirroring enabled, produces
+the same results as previous example:
+	result = align_shapes(Data_dir, Output_dir, Levels, Ids, Names, Mirror=1)
+
+Loading local files not specifying Ids and Names, mirroring disabled:
+	result = align_shapes(Data_dir, Output_dir, Levels, Mirror=0)
+
+Loading web files not specifying Names, mirroring disabled:
+	result = align_shapes(Data_dir, Output_dir, Levels, Ids, Mirror=0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

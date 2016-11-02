@@ -7,6 +7,10 @@ function(Data_dir, Output_dir, Levels, Ids=NULL, Names=NULL, Mirror=1){
 # Departments of Statistical Science, Mathematics, and Evolutionary Anthropology
 # Duke University
 # September 6, 2013
+# 
+# Auto3dgm-fork modifications written by Julia Winchester
+# See FORK_README.txt for further details
+# June 5, 2016
 ##############################################################################################
 
 #-------------YOU DO NOT NEED TO MODIFY ANYTHING AFTER THIS POINT ------------------------#
