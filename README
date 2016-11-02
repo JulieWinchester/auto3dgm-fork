@@ -24,12 +24,11 @@ original auto3dgm R package. These improvements include:
 # Loading auto3dgm-fork
 #######################
 
-Unlike standard auto3dgm, auto3dgm-fork has not been uploaded to CRAN. This 
-means it can't be installed using R's install.packages() function, or loaded 
-using R's library() or require() functions. Instead, auto3dgm-fork files must be
-loaded as needed into an active R session to be used. The easiest way to do this
-is to load the included file 'source_auto3dgm-fork.R' using R's source() 
-function, like so:
+auto3dgm-fork has not been uploaded to CRAN. This means it can't be installed 
+using R's install.packages() function, or loaded using R's library() or 
+require() functions. Instead, auto3dgm-fork files must be loaded as needed into 
+an active R session to be used. The easiest way to do this is to load the 
+included file 'source_auto3dgm-fork.R' using R's source() function, like so:
 
 	source("/Users/Julie/Code/auto3dgm-fork/source_auto3dgm-fork.R")
 
